@@ -1,0 +1,10 @@
+DB_HOSTNAME=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=tranning
+NODE_ENV=development
+STORE_SECRET=2423sdfsfsd3432fdwrerwtg
+KEY=ATM12345!
+PORT=3535
+DIALECT=mysql
