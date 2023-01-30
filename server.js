@@ -53,6 +53,7 @@ require("./app/routes/bonus/bonus.routes")(app);
 require("./app/routes/emp/emp.routes")(app);
 require("./app/routes/dept/dept.routes")(app);
 require("./app/routes/job/job.routes")(app);
+require("./app/routes/transaksi-nasabah/transaksi-nasabah.route")(app);
 
 // dummy health check
 app.get('/api/trainningNodejs', (req, res) => {
