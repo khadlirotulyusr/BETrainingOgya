@@ -9,6 +9,8 @@ module.exports = (app) => {
     router.get("/getTrtk", trtk.getTrtk);
     router.get("/getOptionsTrnb", trtk.getOptionsTrtk);
     router.post("/insert", trtk.insertTransaksiTelkom);
+    router.put("/update", trtk.updateTrTelkom);
+    router.delete("/delete-transaksi", trtk.deleteTrTelkom)
   
     // //router.post("/",  emp.insertEmp);
     // router.put("/update", trnb.updateTrNasabah);

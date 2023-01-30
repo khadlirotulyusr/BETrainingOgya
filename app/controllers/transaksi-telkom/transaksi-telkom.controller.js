@@ -163,27 +163,26 @@ exports.insertTransaksiTelkom = async (req, res) => {
     }
 };
 
-exports.updateTrNasabah = async (req, res) => {
+exports.updateTrTelkom = async (req, res) => {
     const tr = await db.sequelize.transaction();
     try {
         var dataTransaksi = {
-            noRekening: req.body.noRekening,
-            tanggal: req.body.tanggal,
-            statusNasabah: req.body.statusNasabah,
-            uangNasabah: req.body.uangNasabah,
-            statusKet: req.body.statusKet,
-            noRekeningDituju: req.body.noRekeningDituju,
-            noTelepon: req.body.noTelepon
+            //idTransaksiTelkom: parseInt(getmax.total_trid) + 1,
+            idPelanggan: req.body.idPelanggan,
+            bulanTagihan: req.body.bulanTagihan,
+            tahunTagihan: req.body.tahunTagihan,
+            uangTelkom: req.body.uangTelkom,
+            statusTelkom: req.body.statusTelkom
         };
-        const tempUTransaksi = await trnbRepo.updateTrNasabah(req.body.idTransansaksiNasabah, dataTransaksi, tr);
+        const tempUTransaksi = await trtkRepo.updateTrTelkom(req.body.idTransaksiTelkom, dataTransaksi, tr);
         let message = {
-            english: `Successfully Update Transaksi Nasabah`,
-            indonesia: `Berhasil Update Transaksi Nasabah`,
+            english: `Successfully Update Transaksi Telkom`,
+            indonesia: `Berhasil Update Transaksi Telkom`,
         };
         await tr.commit();
         res.send(jsonMessage.jsonSuccess(message, tempUTransaksi));
     } catch (err) {
-        const errMessage = err.message || "Some error occurred while update Transaksi Nasabah";
+        const errMessage = err.message || "Some error occurred while update Transaksi Telkom";
         if (err.original !== undefined) {
             console.log("err.original.code", err.original.code);
             console.log("err.message", err.message);
@@ -194,3 +193,27 @@ exports.updateTrNasabah = async (req, res) => {
         await tr.rollback();
     }
 };
+
+exports.deleteTrTelkom = async (req, res) => {
+    const tr = await db.sequelize.transaction();
+    try {
+      console.log("req.body.idTransaksiTelkom", req.body.idTransaksiTelkom);
+      const tempDelTr = await trtkRepo.deleteTrTelkom(req.body.idTransaksiTelkom, tr);
+      let message = {
+        english: `Successfully Delete Transaksi Telkom`,
+        indonesia: `Berhasil Delete Transaksi Telkom`,
+      };
+      await tr.commit();
+      res.send(jsonMessage.jsonSuccess(message, tempDelTr));
+    } catch (err) {
+      const errMessage = err.message || "Some error occurred while Delete Transaksi Telkom";
+      if (err.original !== undefined) {
+        console.log("err.original.code", err.original.code);
+        console.log("err.message", err.message);
+        res.send(jsonMessage.jsonFailed(err.original.code, err.original.errno, errMessage, "30"));
+      } else {
+        res.send(jsonMessage.jsonFailed("Not Define", "Not Define", errMessage, "30"));
+      }
+      await tr.rollback();
+    }
+  };

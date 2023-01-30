@@ -163,27 +163,28 @@ function trtkRepository(db) {
 
     }
 
-    // const deleteEmp = (employeeIdPrm, tr) => {
+    const deleteTrTelkom = (idTrTelkom, tr) => {
 
-    //     const updateemp = db.empDB.destroy(
-    //         {
-    //             where: {
-    //                 employeeId: employeeIdPrm,
-    //             },
+        const updatetransaksi = db.trtkDB.destroy(
+            {
+                where: {
+                    idTransaksiTelkom: idTrTelkom,
+                },
 
-    //             transaction: tr
-    //         }
-    //     );
-    //     return deleteEmp
+                transaction: tr
+            }
+        );
+        return updatetransaksi
 
-    // }
+    }
 
     return {
         getOptionsTrtk,
         getTrtk,
         getMax,
         insertTransaksiTelkom,
-        updateTrTelkom
+        updateTrTelkom,
+        deleteTrTelkom
         
         // insertEmp,
         // getEmp,
