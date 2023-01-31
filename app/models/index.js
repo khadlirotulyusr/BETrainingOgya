@@ -29,6 +29,7 @@ db.trnbDB = require("./transaksi-nasabah/transaksi-nasabah.model")(sequelize, Se
 db.trtkDB = require("./transaksi-telkom/transaksi-telkom.model")(sequelize, Sequelize);
 db.histnbDB = require("./history nasabah/history-nasabah.model")(sequelize,Sequelize);
 db.masterBankDB = require("./master-bank/master-bank.model")(sequelize, Sequelize);
+db.masterPelangganDB = require("./master-pelanggan/master-pelanggan.model")(sequelize, Sequelize);
 
 //db.bonusDB = require("./bonus/bonus.model")(sequelize, Sequelize);
 
