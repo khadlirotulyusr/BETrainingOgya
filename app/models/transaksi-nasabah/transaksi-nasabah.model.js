@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const trnbDB = sequelize.define("TRNASABAH", {
-      idTransansaksiNasabah: {
+      idTransaksiNasabah: {
         field: 'ID_TRANSAKSI_NASABAH',
         //autoIncrement: true,
         primaryKey: true,

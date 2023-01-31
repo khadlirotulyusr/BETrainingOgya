@@ -22,7 +22,7 @@ exports.getOptionsTrnb = async (req, res) => {
             console.log(querys, '>>>')
             console.log(paramm, 'paramm');
             console.log(fieldd, 'filedd')
-            // condition = req.query
+            condition = req.query
             // const arrCondition = []
             // arrCondition.push(req.query)
 
@@ -65,7 +65,7 @@ exports.getTrnb = async (req, res) => {
         var condition = null;
         const { limit, offset } = getPagination(page - 1, size);
 
-        if (field && value) {
+        if (field !== null && value !== null) {
             // console.log("field >>>", field);
             const params = field;
             //       var strArray = params.split(".");
@@ -86,7 +86,9 @@ exports.getTrnb = async (req, res) => {
                 console.log('Op >>', Op);
                 const norek = parseInt(req.query.noRekening)
                 //   condition = req.query
-                condition = { [params]: { [Op.ilike]: `%${value}%` } };
+                // condition = { [params]: { [Op.ilike]: `%${value}%` } };
+                condition = req.query
+                console.log('req.query>>>', req.query)
                 // condition = { noRekening: { [Op.like]: `%${norek}%` } };
                 // console.log('condition >>>',condition);
                 // console.log(typeof(norek));
@@ -134,7 +136,7 @@ exports.insertTransaksiNasabah = async (req, res) => {
         console.log('get maxxx>>', getmax);
         var trcData = {
 
-            idTransansaksiNasabah: parseInt(getmax.total_trid) + 1,
+            idTransaksiNasabah: parseInt(getmax.total_trid) + 1,
             noRekening: req.body.noRekening,
             tanggal: req.body.tanggal,
             statusNasabah: req.body.statusNasabah,
@@ -145,6 +147,8 @@ exports.insertTransaksiNasabah = async (req, res) => {
         };
 
         const tempITransaksi = await trnbRepo.insertTransaksiNasabah(trcData, tr);
+        // const tempITransaksi = await trnbRepo.insertTransaksiNasabah(trcData, tr);
+
         //console.log("tempIEmp",tempIEmp)
         let message = {
             english: `Successfully Insert Transaksi Nasabah`,
@@ -178,7 +182,7 @@ exports.updateTrNasabah = async (req, res) => {
             noRekeningDituju: req.body.noRekeningDituju,
             noTelepon: req.body.noTelepon
         };
-        const tempUTransaksi = await trnbRepo.updateTrNasabah(req.body.idTransansaksiNasabah, dataTransaksi, tr);
+        const tempUTransaksi = await trnbRepo.updateTrNasabah(req.body.idTransaksiNasabah, dataTransaksi, tr);
         let message = {
             english: `Successfully Update Transaksi Nasabah`,
             indonesia: `Berhasil Update Transaksi Nasabah`,
