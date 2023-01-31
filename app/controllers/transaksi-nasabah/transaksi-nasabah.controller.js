@@ -2,6 +2,7 @@ const db = require("../../models");
 //const Op = db.Sequelize.Op;
 const jsonMessage = require("../../json/jsonMessage");
 const trnbRepo = require("../../repositories/transaksi-nasabah/transaksi-nasabah.repository")(db);
+const hstnbRepo = require("../../repositories/history-nasabah/history-nasabah.repository")(db);
 const { getPagination, getPagingData } = require("../../utils/pagination");
 
 
@@ -126,17 +127,18 @@ exports.getTrnb = async (req, res) => {
 
 exports.insertTransaksiNasabah = async (req, res) => {
     const tr = await db.sequelize.transaction();
-    let tanggalParam = Date.parse(req.body.tanggal);
+    let tanggalParam = Date.now();
     console.log('get maxxx>>');
     //console.log("hireDate",hireDateParm)
     try {
         const getmax = await trnbRepo.getMax();
+        const getHistmax = await hstnbRepo.getMax();
         console.log('get maxxx>>', getmax);
         var trcData = {
 
             idTransansaksiNasabah: parseInt(getmax.total_trid) + 1,
             noRekening: req.body.noRekening,
-            tanggal: req.body.tanggal,
+            tanggal: tanggalParam,
             statusNasabah: req.body.statusNasabah,
             uangNasabah: req.body.uangNasabah,
             statusKet: req.body.statusKet,
@@ -146,6 +148,19 @@ exports.insertTransaksiNasabah = async (req, res) => {
 
         const tempITransaksi = await trnbRepo.insertTransaksiNasabah(trcData, tr);
         //console.log("tempIEmp",tempIEmp)
+
+        var hstData = {
+            idHistoryNasabah: parseInt(getHistmax.total_trid)+1,
+            noRekening: req.body.noRekening,
+            tanggal: tanggalParam,
+            uangNasabah: req.body.uangNasabah,
+            statusKet: req.body.statusKet,
+            noRekeningDituju: req.body.noRekeningDituju,
+            noTelepon: req.body.noTelepon
+        };
+
+        const tempIHistTransaksi = await hstnbRepo.insertHistoryNasabah(hstData, tr);
+
         let message = {
             english: `Successfully Insert Transaksi Nasabah`,
             indonesia: `Berhasil Insert Transaksi Nasabah`,
