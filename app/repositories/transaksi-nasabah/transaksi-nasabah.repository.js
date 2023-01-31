@@ -5,7 +5,7 @@ function trnbRepository(db) {
         //console.log("Mysql", db.sequelize.whereQuery);    
         return db.trnbDB.findAndCountAll({
             attributes: [
-                'idTransansaksiNasabah',
+                'idTransaksiNasabah',
                 //'DEPT.departmentName'
                 //[db.sequelize.col('DEPT.departmentName'),'departmentName']
                 'noRekening',
@@ -39,7 +39,7 @@ function trnbRepository(db) {
 
           attributes:
                 [
-                    'idTransansaksiNasabah',
+                    'idTransaksiNasabah',
                 //'DEPT.departmentName'
                 //[db.sequelize.col('DEPT.departmentName'),'departmentName']
                 'noRekening',
@@ -102,7 +102,7 @@ function trnbRepository(db) {
             ... condition
            },//
            order :[
-            'idTransansaksiNasabah'
+            'idTransaksiNasabah'
            ],
            limit, 
            offset,
@@ -161,7 +161,7 @@ function trnbRepository(db) {
         const updatetransaksi = db.trnbDB.update(trcData,
             {
                 where: {
-                    idTransansaksiNasabah: idTrNasabah,
+                    idTransaksiNasabah: idTrNasabah,
                 },
 
                 transaction: tr
