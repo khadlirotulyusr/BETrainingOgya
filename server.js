@@ -55,6 +55,7 @@ require("./app/routes/dept/dept.routes")(app);
 require("./app/routes/job/job.routes")(app);
 require("./app/routes/transaksi-nasabah/transaksi-nasabah.route")(app);
 require("./app/routes/transaksi-telkom/transaksi-telkom.route")(app);
+require("./app/routes/master-bank/master-bank.route")(app);
 
 // dummy health check
 app.get('/api/trainningNodejs', (req, res) => {
