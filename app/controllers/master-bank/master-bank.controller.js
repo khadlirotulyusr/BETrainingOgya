@@ -64,7 +64,7 @@ exports.getMasterBank = async (req, res) => {
         var condition = null;
         const { limit, offset } = getPagination(page - 1, size);
 
-        if (field && value) {
+        if (field !== null && value !== null) {
             // console.log("field >>>", field);
             const params = field;
             //       var strArray = params.split(".");
@@ -84,8 +84,8 @@ exports.getMasterBank = async (req, res) => {
                 const Op = db.Sequelize.Op;
                 console.log('Op >>', Op);
                 const norek = parseInt(req.query.noRekening)
-                //   condition = req.query
-                condition = { [params]: { [Op.ilike]: `%${value}%` } };
+                condition = req.query
+                // condition = { [params]: { [Op.ilike]: `%${value}%` } };
                 // condition = { noRekening: { [Op.like]: `%${norek}%` } };
                 // console.log('condition >>>',condition);
                 // console.log(typeof(norek));
