@@ -19,25 +19,12 @@ exports.getOptionsMasterBank = async (req, res) => {
             var querys = url.parse(req.url, true).query;
             const { paramm, fieldd } = querys
             console.log(querys, '>>>')
-            console.log(paramm, 'paramm');
+            console.log(paramm, 'paramm')
             console.log(fieldd, 'filedd')
-            // condition = req.query
-            // const arrCondition = []
-            // arrCondition.push(req.query)
-
-            // condition = { noTelepon : {$like: `%${noTelepon}%`}};
-
-
-            // condition = 
-            // condition = { [params]: { $like: `%${value}%` } };
-
-
-            //  const Op = db.Sequelize.Op;
-            // condition = { [params]: { [Op.ilike]: `%${value}%` } };
-            console.log(req.query);
+            console.log(req.query)
             console.log(req.query.data);
-            console.log(req.params);
-            // console.log(value);
+            console.log(req.params)
+            console.log(value);
         }
 
         var data = await masterBankRepo.getOptionsMasterBank(condition, limit, offset);
@@ -67,18 +54,10 @@ exports.getMasterBank = async (req, res) => {
         if (field && value) {
             // console.log("field >>>", field);
             const params = field;
-            //       var strArray = params.split(".");
-            ///var params1=""; var params2=""
-            //params1=strArray[0];params2=strArray[1];
-            console.log("value >>", value);
+            console.log("value >>", value)
+
             if (process.env.DIALECT === "oracle") {
-                //console.log('params1',params1);
-
-                //console.log('params2',params2);
-
                 condition = { [field]: { $like: `%${value}%` } };
-
-                //console.log('condition',condition)
             } else {
                 console.log('postgre')
                 const Op = db.Sequelize.Op;
@@ -97,7 +76,7 @@ exports.getMasterBank = async (req, res) => {
         const response = getPagingData(data, page, limit);
         let message = {
             english: `Successfully Retrieved Data Master Bank`,
-            //"indonesia" : `Berhasil Mengambil Data MASTER BANK`,
+            indonesia: `Berhasil Mengambil Data MASTER BANK`,
         };
         res.send(jsonMessage.jsonSuccess(message, response));
     } catch (err) {
@@ -111,32 +90,24 @@ exports.getMasterBank = async (req, res) => {
 };
 
 exports.insertMasterBank = async (req, res) => {
-    const tr = await db.sequelize.transaction();
-    let tanggalParam = Date.parse(req.body.tanggal);
-    console.log('get maxxx>>');
+    const row = await db.sequelize.transaction();
     try {
-        const getmax = await masterBankRepo.getMax();
-        console.log('get maxxx>>', getmax);
-        var trcData = {
-
-            idTransansaksiNasabah: parseInt(getmax.total_trid) + 1,
+        var masterBankData = {
             noRekening: req.body.noRekening,
-            tanggal: req.body.tanggal,
-            statusNasabah: req.body.statusNasabah,
-            uangNasabah: req.body.uangNasabah,
-            statusKet: req.body.statusKet,
-            noRekeningDituju: req.body.noRekeningDituju,
-            noTelepon: req.body.noTelepon
+            nama: req.body.nama,
+            alamat: req.body.alamat,
+            noTelepon: req.body.noTelepon,
+            saldo: req.body.saldo,
+            userID: req.body.userID,
         };
 
-        const tempITransaksi = await masterBankRepo.insertMasterBank(trcData, tr);
-        //console.log("tempIEmp",tempIEmp)
+        const tempMasterBank = await masterBankRepo.insertMasterBank(masterBankData, row);
         let message = {
             english: `Successfully Insert Master Bank`,
             indonesia: `Berhasil Insert Master Bank`,
         };
-        await tr.commit();
-        res.send(jsonMessage.jsonSuccess(message, tempITransaksi));
+        await row.commit();
+        res.send(jsonMessage.jsonSuccess(message, tempMasterBank));
     } catch (err) {
 
         const errMessage = err.message || "Some error occurred while input Master Bank";
@@ -147,29 +118,29 @@ exports.insertMasterBank = async (req, res) => {
         } else {
             res.send(jsonMessage.jsonFailed("Not Define", "Not Define", errMessage, "30"));
         }
-        await tr.rollback();
+        await row.rollback();
     }
 };
 
 exports.updateMasterBank = async (req, res) => {
-    const tr = await db.sequelize.transaction();
+    const row = await db.sequelize.transaction();
     try {
-        var dataTransaksi = {
+        var masterBankData = {
             noRekening: req.body.noRekening,
-            tanggal: req.body.tanggal,
-            statusNasabah: req.body.statusNasabah,
-            uangNasabah: req.body.uangNasabah,
-            statusKet: req.body.statusKet,
-            noRekeningDituju: req.body.noRekeningDituju,
-            noTelepon: req.body.noTelepon
+            nama: req.body.nama,
+            alamat: req.body.alamat,
+            noTelepon: req.body.noTelepon,
+            saldo: req.body.saldo,
+            userID: req.body.userID,
         };
-        const tempUTransaksi = await masterBankRepo.updateMasterBank(req.body.idTransansaksiNasabah, dataTransaksi, tr);
+
+        const tempMasterBank = await masterBankRepo.updateMasterBank(req.body.noRekening, masterBankData, row);
         let message = {
             english: `Successfully Update Master Bank`,
             indonesia: `Berhasil Update Master Bank`,
         };
-        await tr.commit();
-        res.send(jsonMessage.jsonSuccess(message, tempUTransaksi));
+        await row.commit();
+        res.send(jsonMessage.jsonSuccess(message, tempMasterBank));
     } catch (err) {
         const errMessage = err.message || "Some error occurred while update Master Bank";
         if (err.original !== undefined) {
@@ -179,6 +150,6 @@ exports.updateMasterBank = async (req, res) => {
         } else {
             res.send(jsonMessage.jsonFailed("Not Define", "Not Define", errMessage, "30"));
         }
-        await tr.rollback();
+        await row.rollback();
     }
 };
