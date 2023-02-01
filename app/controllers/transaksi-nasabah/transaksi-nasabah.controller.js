@@ -3,7 +3,9 @@ const db = require("../../models");
 const jsonMessage = require("../../json/jsonMessage");
 const trnbRepo = require("../../repositories/transaksi-nasabah/transaksi-nasabah.repository")(db);
 const hstnbRepo = require("../../repositories/history-nasabah/history-nasabah.repository")(db);
+const mstBankRepo = require("../../repositories/master-bank/master-bank.repository")(db);
 const { getPagination, getPagingData } = require("../../utils/pagination");
+const { condition } = require("sequelize");
 
 
 exports.getOptionsTrnb = async (req, res) => {
@@ -126,7 +128,6 @@ exports.getTrnb = async (req, res) => {
     }
 };
 
-
 exports.insertTransaksiNasabah = async (req, res) => {
     const tr = await db.sequelize.transaction();
     let tanggalParam = Date.now();
@@ -152,6 +153,10 @@ exports.insertTransaksiNasabah = async (req, res) => {
         // const tempITransaksi = await trnbRepo.insertTransaksiNasabah(trcData, tr);
 
         //console.log("tempIEmp",tempIEmp)
+        // const op = db.Sequelize.Op;
+        // let norek = req.body.noRekening;
+        // const namaNasabah = mstBankRepo.getNamaNasabah(condition={noRekening:{[op.in]: norek}})
+        console.log(namaNasabah)
 
         var hstData = {
             idHistoryNasabah: parseInt(getHistmax.total_trid)+1,

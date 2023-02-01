@@ -1,3 +1,5 @@
+const { condition } = require("sequelize");
+
 function masterBankRepository(db) {
 
     const getOptionsMasterBank = (condition, limit, offset) => {
@@ -47,6 +49,19 @@ function masterBankRepository(db) {
             nest: true,
             plain: false,
 
+        });
+    }
+
+    const getNamaNasabah = () => {
+        const nama = db.masterBankDB.findAll({
+            attributes:
+            [
+                'nama'
+            ],
+            where: {
+                ...condition
+            },
+            raw:true
         });
     }
 
@@ -119,7 +134,8 @@ function masterBankRepository(db) {
         getMax,
         insertMasterBank,
         updateMasterBank,
-        deleteMasterBank
+        deleteMasterBank,
+        getNamaNasabah
     }
 }
 
