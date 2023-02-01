@@ -52,11 +52,11 @@ function hstnbRepository(db) {
            order :[
             'idHistoryNasabah'
            ],
-           limit, 
-           offset,
+        //    limit, 
+        //    offset,
            raw : true,
-                nest : true,
-                plain: false,
+                // nest : true,
+                // plain: false,
             });
         }
 
