@@ -1,8 +1,8 @@
 const jsonSuccess = (msg,data) => {
     
     const message={
-        "error_code" : "Ogya-00",
-        "error_message" : msg,
+        "success_code" : "OGYA-00",
+        "success_message" : msg,
         "data":data,
     }
     return message;
