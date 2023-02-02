@@ -43,8 +43,6 @@ function masterBankRepository(db) {
                 'noRekening'
             ],
 
-            limit,
-            offset,
             raw: true,
             nest: true,
             plain: false,
@@ -55,13 +53,13 @@ function masterBankRepository(db) {
     const getNamaNasabah = () => {
         const nama = db.masterBankDB.findAll({
             attributes:
-            [
-                'nama'
-            ],
+                [
+                    'nama'
+                ],
             where: {
                 ...condition
             },
-            raw:true
+            raw: true
         });
     }
 
