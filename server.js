@@ -5,7 +5,7 @@ const cors = require("cors");
 const dotenv = require('dotenv').config();
 const app = express();
 const hmac = require("./app/utils/hmac");
- 
+
 global.__basedir = __dirname;
 
 const corsOptions = {

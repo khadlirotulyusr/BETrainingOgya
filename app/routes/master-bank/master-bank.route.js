@@ -9,5 +9,5 @@ module.exports = (app) => {
     router.get("/getOptionsMasterBank", mb.getOptionsMasterBank);
     router.post("/insert", mb.insertMasterBank);
     router.put("/update", mb.updateMasterBank);
-    // router.delete("/delete", mb.deleteMasterBank);
+    router.delete("/delete", mb.deleteMasterBank);
 };

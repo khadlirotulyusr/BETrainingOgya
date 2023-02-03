@@ -101,13 +101,13 @@ exports.insertMasterBank = async (req, res) => {
             userID: req.body.userID,
         };
 
-        const tempMasterBank = await masterBankRepo.insertMasterBank(masterBankData, row);
+        const tempInsertMasterBank = await masterBankRepo.insertMasterBank(masterBankData, row);
         let message = {
             english: `Successfully Insert Master Bank`,
             indonesia: `Berhasil Insert Master Bank`,
         };
         await row.commit();
-        res.send(jsonMessage.jsonSuccess(message, tempMasterBank));
+        res.send(jsonMessage.jsonSuccess(message, tempInsertMasterBank));
     } catch (err) {
 
         const errMessage = err.message || "Some error occurred while input Master Bank";
@@ -134,15 +134,38 @@ exports.updateMasterBank = async (req, res) => {
             userID: req.body.userID,
         };
 
-        const tempMasterBank = await masterBankRepo.updateMasterBank(req.body.noRekening, masterBankData, row);
+        const tempUpdateMasterBank = await masterBankRepo.updateMasterBank(req.body.noRekening, masterBankData, row);
         let message = {
             english: `Successfully Update Master Bank`,
             indonesia: `Berhasil Update Master Bank`,
         };
         await row.commit();
-        res.send(jsonMessage.jsonSuccess(message, tempMasterBank));
+        res.send(jsonMessage.jsonSuccess(message, tempUpdateMasterBank));
     } catch (err) {
         const errMessage = err.message || "Some error occurred while update Master Bank";
+        if (err.original !== undefined) {
+            console.log("err.original.code", err.original.code);
+            console.log("err.message", err.message);
+            res.send(jsonMessage.jsonFailed(err.original.code, err.original.errno, errMessage, "30"));
+        } else {
+            res.send(jsonMessage.jsonFailed("Not Define", "Not Define", errMessage, "30"));
+        }
+        await row.rollback();
+    }
+};
+
+exports.deleteMasterBank = async (req, res) => {
+    const row = await db.sequelize.transaction();
+    try {
+        const tempDeleteMasterBank = await masterBankRepo.deleteMasterBank(req.body.noRekening, row);
+        let message = {
+            english: `Successfully Delete Master Bank`,
+            indonesia: `Berhasil Delete Master Bank`,
+        };
+        await row.commit();
+        res.send(jsonMessage.jsonSuccess(message, tempDeleteMasterBank));
+    } catch (err) {
+        const errMessage = err.message || "Some error occurred while Delete Master Bank";
         if (err.original !== undefined) {
             console.log("err.original.code", err.original.code);
             console.log("err.message", err.message);
