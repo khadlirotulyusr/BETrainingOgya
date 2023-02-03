@@ -1,18 +1,19 @@
-const jsonSuccess = (msg,data) => {
-    
-    const message={
-        "success_code" : "OGYA-00",
-        "success_message" : msg,
-        "data":data,
+const jsonSuccess = (msg, data) => {
+
+    const message = {
+        "success_code": "OGYA-00",
+        "success_message": msg,
+        "data": data,
+        "status": 200
     }
     return message;
 }
 module.exports.jsonSuccess = jsonSuccess;
 
 const jsonFailed = (code, errno, errMessage, errCode) => {
-    const message={
-        "error_code" : `OGYA-${errCode}`,
-        "error_message" :{
+    const message = {
+        "error_code": `OGYA-${errCode}`,
+        "error_message": {
             code: code,
             errno: errno,
             message: errMessage,
