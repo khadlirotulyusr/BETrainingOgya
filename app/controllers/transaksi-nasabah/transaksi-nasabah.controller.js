@@ -152,16 +152,22 @@ exports.insertTransaksiNasabah = async (req, res) => {
         const tempITransaksi = await trnbRepo.insertTransaksiNasabah(trcData, tr);
         // const tempITransaksi = await trnbRepo.insertTransaksiNasabah(trcData, tr);
 
-        //console.log("tempIEmp",tempIEmp)
-        // const op = db.Sequelize.Op;
-        // let norek = req.body.noRekening;
-        // const namaNasabah = mstBankRepo.getNamaNasabah(condition={noRekening:{[op.in]: norek}})
-        console.log(namaNasabah)
+        const op = db.Sequelize.Op;
+        // var norek = req.body.noRekening;
+        console.log('op>>>',op);
+        console.log('noRekening :', req.body.noRekening);
+        // kondisi={noRekening:{[op.eq]: norek}}
+        // console.log(kondisi);
+        var namaNasabah = await mstBankRepo.getNamaNasabah({noRekening:{[op.eq]: req.body.noRekening}})
+        console.log('namaNsabah :', namaNasabah)
+        var nmNasabah = namaNasabah.rows[0].nama;
+        console.log('Get Nama Nasabah :',nmNasabah);
 
         var hstData = {
             idHistoryNasabah: parseInt(getHistmax.total_trid)+1,
             noRekening: req.body.noRekening,
             tanggal: tanggalParam,
+            nama: nmNasabah,
             uangNasabah: req.body.uangNasabah,
             statusKet: req.body.statusKet,
             noRekeningDituju: req.body.noRekeningDituju,
