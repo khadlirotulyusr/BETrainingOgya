@@ -2,6 +2,7 @@ const db = require("../../models");
 //const Op = db.Sequelize.Op;
 const jsonMessage = require("../../json/jsonMessage");
 const trtkRepo = require("../../repositories/transaksi-telkom/transaksi-telkom.repository")(db);
+const histTlkmRepo = require("../../repositories/history_telkom/history-telkomrepository")(db);
 const { getPagination, getPagingData } = require("../../utils/pagination");
 
 
@@ -167,7 +168,7 @@ exports.updateTrTelkom = async (req, res) => {
     const tr = await db.sequelize.transaction();
     try {
         var dataTransaksi = {
-            //idTransaksiTelkom: parseInt(getmax.total_trid) + 1,
+            idTransaksiTelkom: req.body.idTransaksiTelkom,
             idPelanggan: req.body.idPelanggan,
             bulanTagihan: req.body.bulanTagihan,
             tahunTagihan: req.body.tahunTagihan,
@@ -175,6 +176,23 @@ exports.updateTrTelkom = async (req, res) => {
             statusTelkom: req.body.statusTelkom
         };
         const tempUTransaksi = await trtkRepo.updateTrTelkom(req.body.idTransaksiTelkom, dataTransaksi, tr);
+        
+        const getMax = await histTlkmRepo.getMax();
+        let tanggalParam = Date.now();  
+        console.log(tanggalParam);
+        var hstData = {
+            idHistoryTelkom: parseInt(getMax.total_trid)+1,
+            idPelanggan : req.body.idPelanggan,
+            tanggal_bayar : tanggalParam,
+            bulan_tagihan : req.body.bulanTagihan,
+            tahun_tagihan : req.body.tahunTagihan,
+            uang : req.body.uangTelkom
+        }
+
+        console.log(hstData);
+
+        const tempHistTelkom = await histTlkmRepo.insertHistoryTelkom(hstData, tr);
+
         let message = {
             english: `Successfully Update Transaksi Telkom`,
             indonesia: `Berhasil Update Transaksi Telkom`,

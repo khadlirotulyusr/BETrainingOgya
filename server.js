@@ -59,6 +59,7 @@ require("./app/routes/history nasabah/history-nasabah.route")(app);
 require("./app/routes/master-bank/master-bank.route")(app);
 require("./app/routes/master-pelanggan/master-pelanggan.route")(app);
 require("./app/routes/user-s/user-s.routes")(app);
+require("./app/routes/history-telkom/history-telkom.route")(app);
 
 // dummy health check
 app.get('/api/trainningNodejs', (req, res) => {

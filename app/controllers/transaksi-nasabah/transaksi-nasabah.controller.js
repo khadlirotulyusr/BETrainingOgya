@@ -141,7 +141,7 @@ exports.insertTransaksiNasabah = async (req, res) => {
 
             idTransaksiNasabah: parseInt(getmax.total_trid) + 1,
             noRekening: req.body.noRekening,
-            tanggal: tanggalParam,
+            // tanggal: tanggalParam,
             statusNasabah: req.body.statusNasabah,
             uangNasabah: req.body.uangNasabah,
             statusKet: req.body.statusKet,

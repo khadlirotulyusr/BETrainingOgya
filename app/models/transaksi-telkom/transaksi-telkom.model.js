@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       uangTelkom: {
         field: 'UANG',
-        type: Sequelize.DECIMAL(12, 0),
+        type: Sequelize.INTEGER,
       },
       statusTelkom: {
         field: 'STATUS',

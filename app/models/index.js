@@ -31,6 +31,7 @@ db.histnbDB = require("./history nasabah/history-nasabah.model")(sequelize,Seque
 db.masterBankDB = require("./master-bank/master-bank.model")(sequelize, Sequelize);
 db.masterPelangganDB = require("./master-pelanggan/master-pelanggan.model")(sequelize, Sequelize);
 db.userDB = require("./user-s/user-s")(sequelize, Sequelize);
+db.histtlkmDB= require("./history-telkom/history-telkom.model")(sequelize,Sequelize);
 
 //db.bonusDB = require("./bonus/bonus.model")(sequelize, Sequelize);
 
